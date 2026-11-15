@@ -7,12 +7,12 @@
 # Preserve role choices, reasoning effort, and panel seats. This policy overrides conflicting skill/runtime fallback guidance; see ~/.codex/AGENTS.md.
 # pstack model configuration. One line per role. See the runtime for defaults when a role is missing.
 # `inherit-parent` or `auto` as a value: the role runs on the parent chat model (omit Task `model`). Alias entries in a panel list still count toward its fan-out.
-# Judgment and specialist roles use GPT-6.1 Sol with max reasoning effort. Mechanical execution uses GPT-6.1 Terra with low effort.
+# Judgment and specialist roles use GPT-6.1 Sol with max reasoning effort. Mechanical execution uses GPT-6.1 Terra with high effort.
 # Codex reads ~/.codex/pstack/pstack-models.md and uses native subagents.
 # Use each role's model and reasoning effort in the native fields when supported.
 # Panel lists retain two entries and therefore two agents, both using the same model and reasoning effort.
 # budget: max (max)
-mechanical execution: gpt-6.1-terra low
+mechanical execution: gpt-6.1-terra high
 feature, refactoring: gpt-6.1-sol max
 bug-fix: gpt-6.1-sol max
 perf-issue: gpt-6.1-sol max

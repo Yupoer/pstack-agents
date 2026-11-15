@@ -1,6 +1,6 @@
 # 在 Codex 使用 pstack
 
-這個 fork 的 Codex 安裝獨立管理技能、模型設定與更新。基底是上游 pstack v0.15.36。原始 `pstack/` 與上游 Git 歷史保留，方便之後合併新版。
+這個 fork 的 Codex 安裝獨立管理技能、模型設定與更新。基底是上游 pstack v0.15.42。原始 `pstack/` 與上游 Git 歷史保留，方便之後合併新版。
 
 ## 安裝與更新
 
@@ -39,11 +39,15 @@ git pull --ff-only origin main
 & "$HOME/.codex/pstack/sync-pstack.ps1" -SourceRoot 'C:\repos\pstack-codex'
 ```
 
+## 同步到各台主機
+
+在維護用的 checkout 把原版 `cursor/plugins` 更新和自訂改動合在一起。先在本機驗證，再推到 fork 的 `main`。各台主機只從 fork 快進拉取已發布版本。拉取後，用各自的同步腳本更新 Codex runtime：Windows 用上面的 PowerShell 腳本，已配置的 Mac 用本機的 `sync-pstack-macos.py`。逐台確認 checkout 指向同一個 fork commit，並確認已安裝的 runtime 來自該 checkout。既有模型檔由各台保留，需要更改的角色另行更新。
+
 ## 並行工作與機械操作
 
 依照 [Codex 的並行規則](runtime.md#work-in-parallel)，可以馬上開始的獨立工作一起跑。主代理在其他工作進行時繼續處理自己的部分，等到下一步需要某個結果才等它。同一個可寫目標只交給一個操作者；需要新版本或前一步產物的檢查等輸入就緒。
 
-只須跑指定指令或照步驟操作工具時，交給 `mechanical execution`。預設為 `gpt-6.1-terra low`，舊有模型設定缺少這一列也適用。如果最新版 Luna 支援所需工具，可在模型檔設定 `mechanical execution: gpt-6-luna low`，版本依上面的模型政策更新。操作代理回傳原始輸出、操作紀錄或截圖，主代理負責解讀。
+只須跑指定指令或照步驟操作工具時，交給 `mechanical execution`。預設為 `gpt-6.1-terra high`，舊有模型設定缺少這一列也適用。如果最新版 Luna 支援所需工具，可在模型檔設定 `mechanical execution: gpt-6-luna low`，版本依上面的模型政策更新。操作代理回傳原始輸出、操作紀錄或截圖，主代理負責解讀。
 
 ## 非同步熱路徑掃描
 

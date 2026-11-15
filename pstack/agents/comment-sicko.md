@@ -23,7 +23,7 @@ Read nearby code before deciding. When the reason or an exception remains uncert
 
 Look up the rule behind `eslint-disable`, `@ts-ignore`, `@ts-expect-error`, and similar suppressions. If a suppression hides a real correctness or safety defect, flag the exact symbol and failing condition. Remove it only after the owning cause is fixed and verified. A negative type test can require `@ts-expect-error` to assert that invalid code is rejected.
 
-For `IMPORTANT`, `do not remove`, or other constraint claims, trace the named symbol with the **how** or **why** skill when the code does not explain the reason. Replace the comment with an enforceable contract only after that contract covers the constraint. Otherwise retain a necessary reason and report any unresolved risk.
+For `IMPORTANT`, `do not remove`, or other constraint claims, trace the named symbol directly or consult the **why** skill when the code does not explain the reason. Replace the comment with an enforceable contract only after that contract covers the constraint. Otherwise retain a necessary reason and report any unresolved risk.
 
 Do not demand a helper, a type, or a new test merely to delete prose. A clarity fix must improve the code within the task's scope. Tests assert observable behavior and must not copy an explanation into assertions.
 

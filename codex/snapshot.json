@@ -1,13 +1,13 @@
 {
-  "pstackVersion": "0.15.36",
+  "pstackVersion": "0.15.42",
   "upstream": "https://github.com/cursor/plugins",
-  "upstreamCommit": "2776ddd2355d6d6c8747d3964600f28daf62f049",
+  "upstreamCommit": "bf0c7cd80abdbf7fe47b634978a7d1b4071f71a7",
   "customFiles": {
     "codex/.gitattributes": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
     "codex/guide/agents-block.txt": "119337e837611a2f51eaef03b66c84017e0c38ab6c3aff2ac11d44fd6ca4c616",
-    "codex/README.md": "9dc50519316ebdbc9a395199387ac631d4388131e3ae44b1ae3e28e794be2387",
-    "codex/rules/pstack-models.md": "64aa8c473941242e612d5fbf9bf64587badc2aaf3cebb4f3a4fbc41753adbf7d",
-    "codex/runtime.md": "60c7154fe2cbf401c0f47594073f110ca5547abaf9129acb4d1640cdfc5a45f1",
+    "codex/README.md": "9b28b3b3c55a1c4bf44449de29de8330d20587ac98a13884049e2a152b23d753",
+    "codex/rules/pstack-models.md": "08f53e8490cc16ff6ab8bfec0de1471f0061cce9df4dd670a0a9bbee67dafe01",
+    "codex/runtime.md": "dbac407849c071afb17632b5a0b23d9d3e661f9cff7b6f5e4ecde8a42469c689",
     "codex/skills/poteto-help/SKILL.md": "a8bc03018dbd15153bf31fe269a339be53758fa8cd8be2acace581006e250730",
     "codex/skills/setup-pstack/SKILL.md": "a117bb39d7bbf53d7db6887cf485965d4fbc0e15f2e6b3f86516f680eae4da69",
     "codex/sync-pstack.ps1": "6b400a5504e1b71a4518d43383065fbf8db01933e744525e614bea78c03203be",

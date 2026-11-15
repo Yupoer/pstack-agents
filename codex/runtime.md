@@ -45,7 +45,7 @@ Apply this to any Codex task. Playbooks still set the required checks and depend
 
 ### Delegate mechanical execution
 
-Use the `mechanical execution` role for command-only requests and scripted operations that need no interpretation. Use the configured model, or default to the latest verified Terra at `low` (`gpt-6.1-terra low` in the model list above) if an existing model file lacks the role. Luna is also a configurable choice when the latest version supports the required tools. Keep the model policy above. If there is no suitable delegate, use the available native tools directly within the same authorization.
+Use the `mechanical execution` role for command-only requests and scripted operations that need no interpretation. Use the role's configured model and effort as written, or default to the latest verified Terra at `high` (`gpt-6.1-terra high` in the model list above) if an existing model file lacks the role. Luna is also a configurable choice when the latest version supports the required tools. Keep the model policy above. If there is no suitable delegate, use the available native tools directly within the same authorization.
 
 Give the worker only the command or scripted steps, working directory or target ID, input revision or build when relevant, permitted changes, and an evidence path the parent can read. Tell it to run the steps as written. For commands, return the command, exit status, and unchanged output, or paths to the raw output. For interactions, return the actions taken, observed states, and any requested screenshots or logs. Stop and report an unexpected state that calls for a decision. The worker can operate the actual tool for a required reproduction or check. The parent inspects the evidence and owns the verdict.
 
