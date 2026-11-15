@@ -1,3 +1,4 @@
 <!-- pstack:begin -->
 Before following any pstack skill, read `~/.codex/pstack/runtime.md`. This Codex-owned runtime and `~/.codex/pstack/pstack-models.md` govern platform tools and model roles. User and project instructions take precedence over skill defaults.
+For command-only work, scripted tool operation, or tasks with independent pieces, follow the "Work in parallel" rules in `~/.codex/pstack/runtime.md` even when no pstack skill was invoked.
 <!-- pstack:end -->

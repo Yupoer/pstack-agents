@@ -18,7 +18,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\codex\sync-pstack.ps1 
 
 安裝會把來源複製到 `~/.codex/pstack/versions/`，用 `runtime` junction 指向這一版，再把技能連到 `~/.agents/skills/`。`codex/skills/` 的 Codex 專用入口覆蓋同名上游技能。每個安裝的技能都會先載入 [Codex runtime](runtime.md)。
 
-模型設定存於 `~/.codex/pstack/pstack-models.md`。首次安裝沿用 repo 裡所有角色的 `gpt-6.1-sol max`，panel 保留兩個 agent。重跑安裝會保留已存在的模型設定。所有模型只能選各供應商同系列、同級別的最新版；不可因不可用、配額或速度退回舊版。2026-11-06 的 OpenAI 版本為 Luna 6、Terra 6.1、Sol 6.1、Astra 6。確認更新版本後取代舊版，不把這份日期清單當永久上限。
+模型設定存於 `~/.codex/pstack/pstack-models.md`。首次安裝使用 repo 裡的角色設定，判斷和專業角色使用 `gpt-6.1-sol max`，panel 保留兩個 agent。重跑安裝會保留現有設定。所有模型只能選各供應商同系列、同級別的最新版；不可因不可用、配額或速度退回舊版。2026-11-06 的 OpenAI 版本為 Luna 6、Terra 6.1、Sol 6.1、Astra 6。確認更新版本後取代舊版，不把這份日期清單當永久上限。
 
 安裝程式只取代自己管理的 junction，遇到同名的其他技能會在安裝前停止。原本指向官方 pstack 快取的舊 junction 會移除，目標檔案保留。舊 adapter、herdr 委派腳本與共用教學會移到備份。這些舊整合不再參與 Codex 執行。
 
@@ -38,6 +38,12 @@ git pull --ff-only origin main
 ```powershell
 & "$HOME/.codex/pstack/sync-pstack.ps1" -SourceRoot 'C:\repos\pstack-codex'
 ```
+
+## 並行工作與機械操作
+
+依照 [Codex 的並行規則](runtime.md#work-in-parallel)，可以馬上開始的獨立工作一起跑。主代理在其他工作進行時繼續處理自己的部分，等到下一步需要某個結果才等它。同一個可寫目標只交給一個操作者；需要新版本或前一步產物的檢查等輸入就緒。
+
+只須跑指定指令或照步驟操作工具時，交給 `mechanical execution`。預設為 `gpt-6.1-terra low`，舊有模型設定缺少這一列也適用。如果最新版 Luna 支援所需工具，可在模型檔設定 `mechanical execution: gpt-6-luna low`，版本依上面的模型政策更新。操作代理回傳原始輸出、操作紀錄或截圖，主代理負責解讀。
 
 ## 非同步熱路徑掃描
 

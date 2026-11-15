@@ -5,13 +5,14 @@
 # Apply the same rule to other providers. Never fall back to an older version or bypass this policy through auto, reserve, routing aliases, or another CLI.
 # Inherit or omit an override only when the resolved model is verified compliant. If the latest cannot run or be verified, stop the affected call and report it.
 # Preserve role choices, reasoning effort, and panel seats. This policy overrides conflicting skill/runtime fallback guidance; see ~/.codex/AGENTS.md.
-# pstack model configuration. One line per role. Missing roles use the current Codex model.
+# pstack model configuration. One line per role. See the runtime for defaults when a role is missing.
 # `inherit-parent` or `auto` as a value: the role runs on the parent chat model (omit Task `model`). Alias entries in a panel list still count toward its fan-out.
-# All roles use GPT-6.1 Sol with max reasoning effort.
+# Judgment and specialist roles use GPT-6.1 Sol with max reasoning effort. Mechanical execution uses GPT-6.1 Terra with low effort.
 # Codex reads ~/.codex/pstack/pstack-models.md and uses native subagents.
-# Use model gpt-6.1-sol and reasoning_effort max when those fields are supported.
+# Use each role's model and reasoning effort in the native fields when supported.
 # Panel lists retain two entries and therefore two agents, both using the same model and reasoning effort.
 # budget: max (max)
+mechanical execution: gpt-6.1-terra low
 feature, refactoring: gpt-6.1-sol max
 bug-fix: gpt-6.1-sol max
 perf-issue: gpt-6.1-sol max
