@@ -1,0 +1,87 @@
+name: Sync upstream
+
+# GitHub cannot trigger this fork when cursor/plugins changes, so poll on a schedule.
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: sync-upstream
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Merge upstream
+        id: merge
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote add upstream https://github.com/cursor/plugins.git
+          git fetch upstream main
+
+          if git merge-base --is-ancestor upstream/main HEAD; then
+            echo "Already up to date with upstream."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          git merge --no-commit --no-ff upstream/main || true
+
+          # GITHUB_TOKEN cannot push workflow changes, and this fork owns its own CI: keep HEAD's workflows.
+          { git diff --name-only HEAD -- .github/workflows; git diff --name-only --diff-filter=U -- .github/workflows; } | sort -u | while read -r p; do
+            [ -n "$p" ] || continue
+            if git cat-file -e "HEAD:$p" 2>/dev/null; then
+              git checkout HEAD -- "$p"
+            else
+              git rm -rf -q --ignore-unmatch -- "$p"
+            fi
+          done
+
+          if [ -n "$(git diff --name-only --diff-filter=U)" ]; then
+            git diff --name-only --diff-filter=U > conflicts.txt
+            git merge --abort
+            echo "changed=conflict" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          node scripts/generate-pstack-harness-trees.mjs
+          VERSION=$(node -p "require('./pstack/plugin.json').version")
+          SHA=$(git rev-parse upstream/main)
+          if [ -f codex/snapshot.json ]; then
+            node -e "
+              const fs=require('fs');const p='codex/snapshot.json';const s=JSON.parse(fs.readFileSync(p,'utf8'));
+              s.pstackVersion='$VERSION';s.upstreamCommit='$SHA';
+              fs.writeFileSync(p,JSON.stringify(s,null,2)+'\n');"
+          fi
+          git add -A
+          git commit -m "Merge upstream Pstack $VERSION (${SHA:0:7})"
+          git push origin HEAD:${{ github.event.repository.default_branch }}
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Report conflicts
+        if: steps.merge.outputs.changed == 'conflict'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="Upstream sync needs manual merge"
+          body=$(printf 'Merging cursor/plugins main conflicts with this fork.\n\nConflicting files:\n\n%s\n\nRun `git fetch upstream && git merge upstream/main` locally, resolve, then `node scripts/generate-pstack-harness-trees.mjs`.' "$(sed 's/^/- /' conflicts.txt)")
+          existing=$(gh issue list --state open --search "$title in:title" --json number --jq '.[0].number // empty')
+          if [ -z "$existing" ]; then
+            gh issue create --title "$title" --body "$body"
+          else
+            gh issue comment "$existing" --body "$body"
+          fi
+          exit 1
