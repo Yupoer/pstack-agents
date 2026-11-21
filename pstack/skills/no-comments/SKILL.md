@@ -16,7 +16,7 @@ Use the caller's files or diff. Otherwise use the current diff against the base 
 
 ## Steps
 
-1. Spawn `Task` with `subagent_type: "comment-sicko"`. Pass the scope. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **poteto-mode** skill. Do not restate its rules.
+1. Spawn `Task` with `subagent_type: "comment-sicko"`. Pass the scope. Pick each subagent's reasoning level for the job, per the Subagents section of the **poteto-mode** skill. Do not restate its rules.
 2. Inspect its report and diff. Reject application-code edits, scope escapes, exception-protected deletions, and unsupported defect claims. Restore necessary comments or directives deleted without evidence. Trace ambiguous constraint claims in the code or consult `/why`; preserve them while the reason is unresolved. Report that gap.
 3. Accept a rename or structural fix only when it improves clarity within the existing task. Do not create helpers, broad refactors, or redundant tests just to eliminate comments. Use **architect** only when an accepted fix genuinely needs a new shape.
 4. Fix accepted owning causes within scope and run the affected checks. Preserve safeguards and suppressions until their verified replacement works. If a root cause is outside scope, retain the necessary explanation and report the remaining work.

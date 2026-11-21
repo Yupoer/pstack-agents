@@ -1,7 +1,7 @@
 {
-  "pstackVersion": "0.15.42",
+  "pstackVersion": "0.15.46",
   "upstream": "https://github.com/cursor/plugins",
-  "upstreamCommit": "bf0c7cd80abdbf7fe47b634978a7d1b4071f71a7",
+  "upstreamCommit": "d42aff08aa58965d2735c4ead61a9af82b89d0d0",
   "customFiles": {
     "codex/.gitattributes": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
     "codex/guide/agents-block.txt": "119337e837611a2f51eaef03b66c84017e0c38ab6c3aff2ac11d44fd6ca4c616",
