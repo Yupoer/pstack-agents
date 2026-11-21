@@ -17,7 +17,7 @@ $utf8 = New-Object Text.UTF8Encoding $false
 
 foreach ($required in @('pstack\skills\poteto-mode\SKILL.md', 'codex\runtime.md', 'codex\rules\pstack-models.md', 'codex\guide\agents-block.txt')) {
     if (-not (Test-Path -LiteralPath (Join-Path $SourceRoot $required) -PathType Leaf)) {
-        throw "Not a pstack-codex source checkout: $SourceRoot (missing $required)"
+        throw "Not a pstack-agents source checkout: $SourceRoot (missing $required)"
     }
 }
 if ($SkillsRoot -eq $legacySkills -or $SkillsRoot.StartsWith($pstackHome + '\', [StringComparison]::OrdinalIgnoreCase)) {
