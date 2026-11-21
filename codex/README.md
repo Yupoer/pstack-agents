@@ -36,7 +36,7 @@ git pull --ff-only origin main
 已安裝的同步腳本也可搭配明確的 checkout 路徑使用：
 
 ```powershell
-& "$HOME/.codex/pstack/sync-pstack.ps1" -SourceRoot 'C:\repos\pstack-codex'
+& "$HOME/.codex/pstack/sync-pstack.ps1" -SourceRoot 'C:\repos\pstack-agents'
 ```
 
 ## 同步到各台主機
